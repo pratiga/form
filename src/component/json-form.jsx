@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useState} from 'react';
 const data = {
     "form":{
         "sections":[
@@ -7,6 +8,7 @@ const data = {
                 "section_title":"Basic Information",
                 "fields":[
                     {
+                        "id":"1",
                         "name":"name",
                         "label":"Name",
                         "required":true,
@@ -14,6 +16,7 @@ const data = {
                         "html_element": "textbox"
                     },
                     {
+                        "id":"2",
                         "name":"email",
                         "label":"Email",
                         "hidden":false,
@@ -22,6 +25,7 @@ const data = {
                         "html_element": "email"
                     },
                     {
+                        "id":"3",
                         "name":"phone",
                         "label":"Phone",
                         "required":true,
@@ -29,6 +33,7 @@ const data = {
                         "html_element": "textbox"
                     },
                     {
+                        "id":"4",
                         "name":"age",
                         "label":"Age",
                         "hidden":false,
@@ -38,7 +43,7 @@ const data = {
                         "html_element": "number" 
                     },
                     {
-                        
+                        "id":"5",
                         "name":"photo",
                         "label":"Photo",
                         "required": false,
@@ -53,27 +58,44 @@ const data = {
         ]
     }
 }
-const json = () => {
-    // eslint-disable-next-line no-unused-vars
-    const onSubmit =(e) => {
-        e.preventDefault();
+
+ const json = () => {
+   const [user, setUser] = useState({
+       id:"",name:"", email:"", phone:"", age:"", photo:""
+   });
+    let name,value;
+    const handleInputs = (e) => {
+        console.log(e);
+        name= e.target.name;
+        value= e.target.value;
+        
+        // eslint-disable-next-line no-undef
+        setUser({...user, [Name]:value})
     }
+   
+   
   return (
     <div className='container'>
       <form className='form-outer'>
         {
             data.form.sections.map(formData => {
-                console.log("formData",formData)
+                 //console.log("formData",formData)
                 return(
                     <div>
                         <h1>{formData.section_title}</h1>
                         {
                             formData.fields.map(inputData => {
-                                console.log("inputData", inputData)
+                                 //console.log("inputData", inputData)
                                 return(
-                                    <div>
+                                    <div key={inputData.id}>
                                         <label>{inputData.label}</label>
-                                        <input type={inputData.html_element} name={inputData.name} required={inputData.required} datatype={inputData.data_type}/>
+                                        <input type={inputData.html_element} 
+                                        Name={inputData.name}
+                                        required={inputData.required}
+                                         datatype={inputData.data_type}
+                                         onChange={handleInputs}
+                                         value={user.Name}
+                                         />
                                     </div>
                                 )
                             })
@@ -87,5 +109,6 @@ const json = () => {
     </div>
   )
 }
+
 
 export default json
