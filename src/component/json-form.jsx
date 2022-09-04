@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState} from 'react';
+import Axios from 'axios';
 const data = {
     "form":{
         "sections":[
@@ -60,23 +61,39 @@ const data = {
 }
 
  const json = () => {
+     const url = ""
    const [user, setUser] = useState({
        id:"",name:"", email:"", phone:"", age:"", photo:""
    });
+   
     let name,value;
     const handleInputs = (e) => {
         console.log(e);
-        name= e.target.name;
+        name= e.target.Name;
         value= e.target.value;
         
         // eslint-disable-next-line no-undef
-        setUser({...user, [Name]:value})
+        setUser({...user, [name]:value})
+    }
+    
+    function submit(e) {
+        e.preventDefault();
+        Axios.post(url,{
+            name:user.name,
+            email:user.email,
+            phone:user.phone,
+            age:user.age,
+            photo:user.photo 
+        })
+        .then(res => {
+            console.log(res.user)
+        })
     }
    
    
   return (
     <div className='container'>
-      <form className='form-outer'>
+      <form  onSubmit={(e) => submit(e)} className='form-outer'>
         {
             data.form.sections.map(formData => {
                  //console.log("formData",formData)
